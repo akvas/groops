@@ -270,7 +270,6 @@ Double TroposphereGlobalMapping::mappingFunctionHydrostatic(const Time &time, UI
     topcon = (1 + a_ht/(1 + b_ht/(1 + c_ht)));
     Double ht_corr_coef = 1/sine - topcon/(sine + gamma);
 
-    std::cerr<<"gmfh: "<<(gmfh + ht_corr_coef * hs_km)%"%21.15e"s<<std::endl;
     return gmfh + ht_corr_coef * hs_km;;
 
   }
@@ -296,7 +295,7 @@ Double TroposphereGlobalMapping::mappingFunctionWet(const Time &time, UInt stati
     Double beta   = bw/(sine + cw);
     Double gamma  = aw/(sine + beta);
     Double topcon = (1 + aw/(1 + bw/(1 + cw)));
-    std::cerr<<"gmfw: "<<(topcon / (sine + gamma))%"%21.15e"s<<std::endl;
+
     return topcon / (sine + gamma);
   }
   catch(std::exception &e)
