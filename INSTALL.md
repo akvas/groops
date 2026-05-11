@@ -422,8 +422,7 @@ This installation guide assumes that the GROOPS source code is located in `$HOME
     ```
 ### Graphical User Interface (GUI)
 
-[!NOTE]
-The Graphical User Interface support on MacOS (Homebrew) is currently experimental.
+:warning: The Graphical User Interface support on MacOS (Homebrew) is currently experimental.
 
 Install Qt base:
 ```
