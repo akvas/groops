@@ -2123,12 +2123,16 @@ Name & Type & Annotation\\
 \end{tabularx}
 
 
-\subsection{Constraints}\label{gnssParametrizationType:autoregressiveModel}
+\subsection{ConstraintAutoregressiveModel}\label{gnssParametrizationType:autoregressiveModel}
 Add a pseudo observation equation (constraint)
 for each selected \configClass{parameters}{parameterSelectorType}
-\begin{equation}
+\begin{equation} base on autoregressive (AR) models up to order $p$ in the form
   0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
 \end{equation}.
+The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p$.
+This is equivalent to applying a zero constraint with Toeplitz covariance matrix to the parameter time series.
+See \configClass{autoregressiveModelSequence}{autoregressiveModelSequenceType} for the detailed theoretical background.
+
 The standard deviation $\sigma$ (\config{sigma}) is used to weight the observation equations.
 
 
@@ -2144,13 +2148,13 @@ Name & Type & Annotation\\
 \end{tabularx}
 
 
-\subsection{Constraints}\label{gnssParametrizationType:constraintDifferences}
+\subsection{ConstraintDifferences}\label{gnssParametrizationType:constraintDifferences}
 Add a pseudo observation equation (constraint)
-for each selected \configClass{parameters}{parameterSelectorType}
+for each selected \configClass{parameters}{parameterSelectorType} in the form
 \begin{equation}
   0 = -1 \cdot \Delta x_{k-1} + 1 \cdot \Delta x_k  + \epsilon,
 \end{equation}.
-The standard deviation \config{sigma} is used to weight the observation equations.
+This constrains the differences of consecutive parameters, with \config{sigma} used to weight the observation equations.
 
 
 \keepXColumns
