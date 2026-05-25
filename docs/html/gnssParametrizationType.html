@@ -721,6 +721,37 @@ The standard deviation <strong class="groops-config-element">sigma</strong> is u
 <tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">relativeToApriori</div></div></td><td>boolean</td><td>constrain only dx and not full x=dx+x0</td></tr>
 </table>
 
+<h2 id="autoregressiveModel">Constraints</h2><p>
+Add a pseudo observation equation (constraint)
+for each selected <a class="groops-class" href="parameterSelectorType.html">parameters</a>
+\[
+  0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
+\]
+The standard deviation $\sigma$ (<strong class="groops-config-element">sigma</strong>) is used to weight the observation equations.
+</p>
+<table class="table table-hover">
+<tr class="table-primary"><th>Name</th><th>Type</th><th>Annotation</th></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">name</div></div></td><td>string</td><td></td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset-unbounded">parameters</div></div></td><td><a href="parameterSelectorType.html">parameterSelector</a></td><td>parameters to constrain</td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">autoregressiveModelSequence</div></div></td><td><a href="autoregressiveModelSequenceType.html">autoregressiveModelSequence</a></td><td>autoregressive model sequence</td></tr>
+</table>
+
+<h2 id="constraintDifferences">Constraints</h2><p>
+Add a pseudo observation equation (constraint)
+for each selected <a class="groops-class" href="parameterSelectorType.html">parameters</a>
+\[
+  0 = -1 \cdot \Delta x_{k-1} + 1 \cdot \Delta x_k  + \epsilon,
+\]
+The standard deviation <strong class="groops-config-element">sigma</strong> is used to weight the observation equations.
+</p>
+<table class="table table-hover">
+<tr class="table-primary"><th>Name</th><th>Type</th><th>Annotation</th></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">name</div></div></td><td>string</td><td></td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset-unbounded">parameters</div></div></td><td><a href="parameterSelectorType.html">parameterSelector</a></td><td>parameters to constrain</td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">sigma</div></div></td><td>double</td><td>sigma of the constraint (same unit as parameter)</td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">relativeToApriori</div></div></td><td>boolean</td><td>constrain only dx and not full x=dx+x0</td></tr>
+</table>
+
 <h2 id="group">Group</h2><p>
 Groups a set of parameters. This class can be used to structure complex parametrizations
 and has no further effect itself.

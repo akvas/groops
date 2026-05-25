@@ -2123,6 +2123,49 @@ Name & Type & Annotation\\
 \end{tabularx}
 
 
+\subsection{Constraints}\label{gnssParametrizationType:autoregressiveModel}
+Add a pseudo observation equation (constraint)
+for each selected \configClass{parameters}{parameterSelectorType}
+\begin{equation}
+  0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
+\end{equation}.
+The standard deviation $\sigma$ (\config{sigma}) is used to weight the observation equations.
+
+
+\keepXColumns
+\begin{tabularx}{\textwidth}{N T A}
+\hline
+Name & Type & Annotation\\
+\hline
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~name & \hfuzz=500pt string & \hfuzz=500pt \\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset-unbounded.pdf}~parameters & \hfuzz=500pt \hyperref[parameterSelectorType]{parameterSelector} & \hfuzz=500pt parameters to constrain\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~autoregressiveModelSequence & \hfuzz=500pt \hyperref[autoregressiveModelSequenceType]{autoregressiveModelSequence} & \hfuzz=500pt autoregressive model sequence\\
+\hline
+\end{tabularx}
+
+
+\subsection{Constraints}\label{gnssParametrizationType:constraintDifferences}
+Add a pseudo observation equation (constraint)
+for each selected \configClass{parameters}{parameterSelectorType}
+\begin{equation}
+  0 = -1 \cdot \Delta x_{k-1} + 1 \cdot \Delta x_k  + \epsilon,
+\end{equation}.
+The standard deviation \config{sigma} is used to weight the observation equations.
+
+
+\keepXColumns
+\begin{tabularx}{\textwidth}{N T A}
+\hline
+Name & Type & Annotation\\
+\hline
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~name & \hfuzz=500pt string & \hfuzz=500pt \\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset-unbounded.pdf}~parameters & \hfuzz=500pt \hyperref[parameterSelectorType]{parameterSelector} & \hfuzz=500pt parameters to constrain\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~sigma & \hfuzz=500pt double & \hfuzz=500pt sigma of the constraint (same unit as parameter)\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~relativeToApriori & \hfuzz=500pt boolean & \hfuzz=500pt constrain only dx and not full x=dx+x0\\
+\hline
+\end{tabularx}
+
+
 \subsection{Group}\label{gnssParametrizationType:group}
 Groups a set of parameters. This class can be used to structure complex parametrizations
 and has no further effect itself.
