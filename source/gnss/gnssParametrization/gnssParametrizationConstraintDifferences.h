@@ -17,13 +17,13 @@
 // Latex documentation
 #ifdef DOCSTRING_GnssParametrization
 static const char *docstringGnssParametrizationConstraintDifferences = R"(
-\subsection{Constraints}\label{gnssParametrizationType:constraintDifferences}
+\subsection{ConstraintDifferences}\label{gnssParametrizationType:constraintDifferences}
 Add a pseudo observation equation (constraint)
-for each selected \configClass{parameters}{parameterSelectorType}
+for each selected \configClass{parameters}{parameterSelectorType} in the form
 \begin{equation}
   0 = -1 \cdot \Delta x_{k-1} + 1 \cdot \Delta x_k  + \epsilon,
 \end{equation}.
-The standard deviation \config{sigma} is used to weight the observation equations.
+This constrains the differences of consecutive parameters, with \config{sigma} used to weight the observation equations.
 )";
 #endif
 

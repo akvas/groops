@@ -17,12 +17,16 @@
 // Latex documentation
 #ifdef DOCSTRING_GnssParametrization
 static const char *docstringGnssParametrizationConstraintAutoregressiveModel = R"(
-\subsection{Constraints}\label{gnssParametrizationType:autoregressiveModel}
+\subsection{ConstraintAutoregressiveModel}\label{gnssParametrizationType:autoregressiveModel}
 Add a pseudo observation equation (constraint)
 for each selected \configClass{parameters}{parameterSelectorType}
-\begin{equation}
+\begin{equation} base on autoregressive (AR) models up to order $p$ in the form
   0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
 \end{equation}.
+The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p$.
+This is equivalent to applying a zero constraint with Toeplitz covariance matrix to the parameter time series.
+See \configClass{autoregressiveModelSequence}{autoregressiveModelSequenceType} for the detailed theoretical background.
+
 The standard deviation $\sigma$ (\config{sigma}) is used to weight the observation equations.
 )";
 #endif
