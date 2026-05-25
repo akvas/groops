@@ -20,7 +20,8 @@ static const char *docstringGnssParametrizationConstraintAutoregressiveModel = R
 \subsection{ConstraintAutoregressiveModel}\label{gnssParametrizationType:autoregressiveModel}
 Add a pseudo observation equation (constraint)
 for each selected \configClass{parameters}{parameterSelectorType}
-\begin{equation} base on autoregressive (AR) models up to order $p$ in the form
+based on autoregressive (AR) models up to order $p$ in the form
+\begin{equation}
   0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
 \end{equation}.
 The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p$.
@@ -107,7 +108,6 @@ inline void GnssParametrizationConstraintAutoregressiveModel::constraints(const 
         normals.setBlock(idBlock2, idBlock2);
 
         Matrix N_ik = arSequence->distributedNormalsBlock(normals.blockCount(), index[k].first, index[k].second);
-        std::cerr<<N_ik.rows()<<"|"<<N_ik.columns()<<std::endl;
         if(normals.isMyRank(idBlock1, idBlock2))
           normals.N(idBlock1, idBlock2)(i1-blockIndex1, i2-blockIndex2) += N_ik(0, 0);
 
