@@ -2317,6 +2317,51 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="constraintDifferences">
+				<xs:annotation>
+					<xs:documentation>parameter difference constraints</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="string" minOccurs="0" default="constraint.name"/>
+						<xs:element name="parameters" type="parameterSelectorType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>parameters to constrain</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sigma" type="double">
+							<xs:annotation>
+								<xs:documentation>sigma of the constraint (same unit as parameter)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="relativeToApriori" type="boolean" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>constrain only dx and not full x=dx+x0</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="constraintAutoregressiveModel">
+				<xs:annotation>
+					<xs:documentation>parameter constraints with an autoregressive model</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="string" minOccurs="0" default="constraint.name"/>
+						<xs:element name="parameters" type="parameterSelectorType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>parameters to constrain</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="autoregressiveModelSequence" type="autoregressiveModelSequenceType">
+							<xs:annotation>
+								<xs:documentation>autoregressive model sequence</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="group">
 				<xs:annotation>
 					<xs:documentation>grouping parametrizations</xs:documentation>
