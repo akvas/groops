@@ -424,9 +424,9 @@ This installation guide assumes that the GROOPS source code is located in `$HOME
 
 :warning: The Graphical User Interface support on MacOS (Homebrew) is currently experimental.
 
-Install Qt base:
+Install Qt base and compatibility packages:
 ```
-brew install qtbase
+brew install qtbase qt5compat
 ```
 
 Then, change into the `gui` directory and compile the source code:
