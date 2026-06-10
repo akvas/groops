@@ -581,7 +581,33 @@ Additional parameters in $[m]$ for zenith wet delay and gradients can be set up 
 and <a class="groops-class" href="parametrizationTemporalType.html">troposphereGradientEstimation</a> (usually a daily trend).
 These parameters can be soft-constrained using
 <a class="groops-class" href="gnssParametrizationType.html#constraints">parametrization:constraints</a>
-to avoid an unsolvable system of normal equations in case of data gaps.</p><p>The <a class="groops-file" href="fileFormat_parameterName.html">parameter names</a> are
+to avoid an unsolvable system of normal equations in case of data gaps.</p><p>The <a class="groops-class" href="fileFormat_instrument.html">outputfileTroposphere</a> contains the columns
+<ul>
+
+<li>zenith dry delay [m] (model)
+</li><li>
+zenith wet delay [m] (model + delta estimate)
+</li><li>
+dry gradient - north direction [m] (model + delta estimate, due to same mapping function)
+</li><li>
+wet gradient - north direction [m] (model)
+</li><li>
+dry gradient - east direction [m] (model + delta estimate, due to same mapping function)
+</li><li>
+wet gradient - east direction [m] (model)
+</li><li>
+zenith wet delay [m] (delta estimate)
+</li><li>
+gradient - north direction [m] (delta estimate)
+</li><li>
+gradient - east direction [m] (delta estimate)
+</li><li>
+dry mapping function coefficient $a$ []
+</li><li>
+wet mapping function coefficient $b$ []
+</li></ul>
+
+in the observation sampling.</p><p>The <a class="groops-file" href="fileFormat_parameterName.html">parameter names</a> are
 <ul>
 
 <li><code>&lt;station>:troposphereWet:&lt;temporal>:&lt;interval></code>,
