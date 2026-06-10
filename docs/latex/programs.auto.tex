@@ -9457,6 +9457,33 @@ Name & Type & Annotation\\
 
 \clearpage
 %==================================
+\subsection{NetCdfIrregular2GriddedDataTimeSeries}\label{NetCdfIrregular2GriddedDataTimeSeries}
+This program converts a COARDS compliant NetCDF file into
+\configFile{outputfileGriddedDataTimeSeries}{griddedDataTimeSeries}.
+If no specific input \config{variableNameData} are selected all suitable data are used.
+
+See also \program{NetCdfInfo}, \program{NetCdf2GriddedData}, \program{GriddedDataTimeSeries2NetCdf}, \program{NetCdf2GriddedDataTimeSeries}.
+
+
+\keepXColumns
+\begin{tabularx}{\textwidth}{N T A}
+\hline
+Name & Type & Annotation\\
+\hline
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~outputfileGriddedDataTimeSeries & \hfuzz=500pt filename & \hfuzz=500pt \\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~inputfileNetCdf & \hfuzz=500pt filename & \hfuzz=500pt \\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~variableNamePoints & \hfuzz=500pt string & \hfuzz=500pt name of NetCDF variable\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~variableNameLongitude & \hfuzz=500pt string & \hfuzz=500pt name of NetCDF variable\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~variableNameLatitude & \hfuzz=500pt string & \hfuzz=500pt name of NetCDF variable\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~variableNameTime & \hfuzz=500pt string & \hfuzz=500pt name of NetCDF variable)\\
+\hfuzz=500pt\includegraphics[width=1em]{element-unbounded.pdf}~variableNameData & \hfuzz=500pt string & \hfuzz=500pt data variables, otherwise all suitable data are used\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~R & \hfuzz=500pt double & \hfuzz=500pt reference radius for ellipsoidal coordinates\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~inverseFlattening & \hfuzz=500pt double & \hfuzz=500pt reference flattening for ellipsoidal coordinates\\
+\hline
+\end{tabularx}
+
+\clearpage
+%==================================
 \subsection{NormalsSphericalHarmonics2Sinex}\label{NormalsSphericalHarmonics2Sinex}
 Write potential coefficients and \file{normal equations}{normalEquation} to
 \href{http://www.iers.org/IERS/EN/Organization/AnalysisCoordinator/SinexFormat/sinex.html}{SINEX format}.

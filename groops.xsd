@@ -24552,6 +24552,54 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="NetCdfIrregular2GriddedDataTimeSeries">
+				<xs:annotation>
+					<xs:documentation>Convert a NetCDF file with irregular point distribution to a GriddedDataTimeSeries file</xs:documentation>
+					<xs:appinfo>tag: Conversion</xs:appinfo>
+					<xs:appinfo>tag: Grid</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="outputfileGriddedDataTimeSeries" type="filename"/>
+						<xs:element name="inputfileNetCdf" type="filename"/>
+						<xs:element name="variableNamePoints" type="string">
+							<xs:annotation>
+								<xs:documentation>name of NetCDF variable</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="variableNameLongitude" type="string" default="lon">
+							<xs:annotation>
+								<xs:documentation>name of NetCDF variable</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="variableNameLatitude" type="string" default="lat">
+							<xs:annotation>
+								<xs:documentation>name of NetCDF variable</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="variableNameTime" type="string" default="time">
+							<xs:annotation>
+								<xs:documentation>name of NetCDF variable)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="variableNameData" type="string" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>data variables, otherwise all suitable data are used</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="R" type="double" minOccurs="0" default="6378137.0">
+							<xs:annotation>
+								<xs:documentation>reference radius for ellipsoidal coordinates</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="inverseFlattening" type="double" minOccurs="0" default="298.2572221010">
+							<xs:annotation>
+								<xs:documentation>reference flattening for ellipsoidal coordinates</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="NormalsSphericalHarmonics2Sinex">
 				<xs:annotation>
 					<xs:documentation>Write potential coefficients and normal equations to SINEX format.</xs:documentation>

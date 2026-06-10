@@ -547,6 +547,7 @@ programs/conversion/grid/griddedData2NetCdf.cpp
 programs/conversion/grid/griddedDataTimeSeries2NetCdf.cpp
 programs/conversion/grid/netCdf2GriddedData.cpp
 programs/conversion/grid/netCdf2GriddedDataTimeSeries.cpp
+programs/conversion/grid/netCdfIrregular2GriddedDataTimeSeries.cpp
 programs/conversion/grid/netCdfInfo.cpp
 programs/conversion/grid/oceanTidesDTU2GriddedData.cpp
 programs/conversion/satellites/champ2AccStar.cpp
