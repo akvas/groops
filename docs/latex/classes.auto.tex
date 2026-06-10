@@ -1947,6 +1947,22 @@ These parameters can be soft-constrained using
 \configClass{parametrization:constraints}{gnssParametrizationType:constraints}
 to avoid an unsolvable system of normal equations in case of data gaps.
 
+The \configFile{outputfileTroposphere}{instrument} contains the columns
+\begin{itemize}
+\item zenith dry delay [m] (model)
+\item zenith wet delay [m] (model + delta estimate)
+\item dry gradient - north direction [m] (model + delta estimate, due to same mapping function)
+\item wet gradient - north direction [m] (model)
+\item dry gradient - east direction [m] (model + delta estimate, due to same mapping function)
+\item wet gradient - east direction [m] (model)
+\item zenith wet delay [m] (delta estimate)
+\item gradient - north direction [m] (delta estimate)
+\item gradient - east direction [m] (delta estimate)
+\item dry mapping function coefficient $a$ []
+\item wet mapping function coefficient $b$ []
+\end{itemize}
+in the observation sampling.
+
 The \file{parameter names}{parameterName} are
 \begin{itemize}
 \item \verb|<station>:troposphereWet:<temporal>:<interval>|,
