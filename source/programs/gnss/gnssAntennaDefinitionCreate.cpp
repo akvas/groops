@@ -599,6 +599,97 @@ public:
 
 /***********************************************/
 
+static const char *docstringGnssAntennaDefintionListMultiplyAdd = R"(
+\subsection{MultiplyAdd}
+TODO
+)";
+
+class GnssAntennaDefintionListMultiplyAdd : public GnssAntennaDefintionList
+{
+public:
+  GnssAntennaDefintionListMultiplyAdd(Config &config)
+  {
+    try
+    {
+      std::vector<GnssAntennaDefintionListPtr> antennaLists1;
+      std::vector<GnssAntennaDefintionListPtr> antennaLists2;
+      std::vector<GnssType> types;
+      Double factor1, factor2;
+      Bool fillNaNs;
+
+      readConfig(config, "antenna1",       antennaLists1,  Config::MUSTSET, "",   "");
+      readConfig(config, "antenna2",       antennaLists2,  Config::MUSTSET, "",   "");
+      readConfig(config, "patternTypes",   types,          Config::OPTIONAL, "",  "only matching patterns, default: all");
+      readConfig(config, "factor1",        factor1,        Config::MUSTSET, "1.0",  "");
+      readConfig(config, "factor2",        factor2,        Config::MUSTSET, "1.0",  "");
+      readConfig(config, "fillNaNs",       fillNaNs,       Config::DEFAULT, "1", "fill NaN values in antenna patterns with zeros");
+      if(isCreateSchema(config)) return;
+
+      for(auto &antennaList1 : antennaLists1)
+        for(auto &antenna1 : antennaList1->antennas)
+        {
+          std::vector<GnssAntennaPattern> patternList;
+          for(auto &pattern1 : antenna1->patterns)
+          {
+            if(!types.size() || pattern1.type.isInList(types))
+              {
+                for(auto &antennaList2 : antennaLists2)
+                  for(auto &antenna2 : antennaList2->antennas)
+                    for(auto &pattern2 : antenna2->patterns)
+                      if(pattern1.type == pattern2.type)
+                      {
+                        std::string type1_str = pattern1.type.str();
+                        std::string type2_str = pattern2.type.str();
+
+                        std::string combined_type;
+                        for(UInt k = 0; k < type1_str.size(); k++)
+                          combined_type.push_back(type1_str.at(k) == '*' ? type2_str.at(k) : type1_str.at(k));
+
+                        GnssAntennaPattern newPattern;
+                        newPattern.dZenit = pattern1.dZenit;
+                        newPattern.type = GnssType(combined_type);
+                        if(fillNaNs)
+                        {
+                          for(UInt k = 0; k <pattern1.pattern.rows(); k++)
+                            for(UInt l = 0; l <pattern1.pattern.columns(); l++)
+                            {
+                              if(std::isnan(pattern1.pattern(k, l)))
+                                pattern1.pattern(k, l) = 0.0;
+
+                              if(std::isnan(pattern2.pattern(k, l)))
+                                pattern2.pattern(k, l) = 0.0;
+                            }
+                        }
+                        newPattern.pattern = factor1 * pattern1.pattern + factor2 * pattern2.pattern;
+                        newPattern.offset = factor1 * pattern1.offset + factor2 * pattern2.offset;
+
+                        patternList.push_back(newPattern);
+                      }
+              }
+          }
+          if(patternList.size() > 0)
+          {
+            antennas.push_back(GnssAntennaDefinitionPtr(new GnssAntennaDefinition()));
+            antennas.back()->name = antenna1->name;
+            antennas.back()->serial = antenna1->serial;
+            antennas.back()->radome = antenna1->radome;
+            antennas.back()->comment = antenna1->comment;
+            antennas.back()->patterns = patternList;
+          }
+
+        }
+
+    }
+    catch(std::exception &e)
+    {
+      GROOPS_RETHROW(e)
+    }
+  }
+};
+
+
+/***********************************************/
+
 GROOPS_REGISTER_CLASS(GnssAntennaDefintionList, "gnssAntennaDefintionListType",
                       GnssAntennaDefintionListNew,
                       GnssAntennaDefintionListFromFile,
@@ -607,7 +698,8 @@ GROOPS_REGISTER_CLASS(GnssAntennaDefintionList, "gnssAntennaDefintionListType",
                       GnssAntennaDefintionListTransform,
                       GnssAntennaDefintionListRename,
                       GnssAntennaDefintionListSetZero,
-                      GnssAntennaDefintionListRemoveCenterMean)
+                      GnssAntennaDefintionListRemoveCenterMean,
+                      GnssAntennaDefintionListMultiplyAdd)
 
 GROOPS_READCONFIG_CLASS(GnssAntennaDefintionList, "gnssAntennaDefintionListType")
 
@@ -636,6 +728,8 @@ GnssAntennaDefintionListPtr GnssAntennaDefintionList::create(Config &config, con
       ptr = GnssAntennaDefintionListPtr(new GnssAntennaDefintionListSetZero(config));
     if(readConfigChoiceElement(config, "removeCenterMean", choice, ""))
       ptr = GnssAntennaDefintionListPtr(new GnssAntennaDefintionListRemoveCenterMean(config));
+    if(readConfigChoiceElement(config, "multiplyAdd", choice, ""))
+      ptr = GnssAntennaDefintionListPtr(new GnssAntennaDefintionListMultiplyAdd(config));
     endChoice(config);
     return ptr;
   }

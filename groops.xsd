@@ -1558,6 +1558,26 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="multiplyAdd">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="antenna1" type="gnssAntennaDefintionListType" maxOccurs="unbounded"/>
+						<xs:element name="antenna2" type="gnssAntennaDefintionListType" maxOccurs="unbounded"/>
+						<xs:element name="patternTypes" type="gnssType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>only matching patterns, default: all</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="factor1" type="double" default="1.0"/>
+						<xs:element name="factor2" type="double" default="1.0"/>
+						<xs:element name="fillNaNs" type="boolean" minOccurs="0" default="1">
+							<xs:annotation>
+								<xs:documentation>fill NaN values in antenna patterns with zeros</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="gnssParametrizationType">

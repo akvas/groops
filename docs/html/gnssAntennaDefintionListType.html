@@ -202,6 +202,19 @@ The mean and offset are defined as discretized (<strong class="groops-config-ele
 <tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">maxZenith</div></div></td><td>angle</td><td>[degree] sampling of pattern to estimate center/constant</td></tr>
 </table>
 
+<h2>MultiplyAdd</h2><p>
+TODO
+</p>
+<table class="table table-hover">
+<tr class="table-primary"><th>Name</th><th>Type</th><th>Annotation</th></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset-unbounded">antenna1</div></div></td><td><a href="gnssAntennaDefintionListType.html">gnssAntennaDefintionList</a></td><td></td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset-unbounded">antenna2</div></div></td><td><a href="gnssAntennaDefintionListType.html">gnssAntennaDefintionList</a></td><td></td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional-unbounded">patternTypes</div></div></td><td><a href="gnssType.html">gnssType</a></td><td>only matching patterns, default: all</td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">factor1</div></div></td><td>double</td><td></td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">factor2</div></div></td><td>double</td><td></td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">fillNaNs</div></div></td><td>boolean</td><td>fill NaN values in antenna patterns with zeros</td></tr>
+</table>
+
         </div>
     </main>
 </body>
