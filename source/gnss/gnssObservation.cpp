@@ -132,7 +132,7 @@ Bool GnssObservation::init(const GnssReceiver &receiver, const GnssTransmitter &
     const Transform3d crf2arfTrans = transmitter.celestial2antennaFrame(idEpoch, timeTrans);
     const Vector3d Tx = crf2arfRecv.transform(crossProduct(crossProduct(k, crf2arfTrans.inverseTransform(Vector3d(1,0,0))), k));
     const Vector3d Ty = crf2arfRecv.transform(crossProduct(crossProduct(k, crf2arfTrans.inverseTransform(Vector3d(0,1,0))), k));
-    Double phaseWindup = atan2(Tx.y()+Ty.x(), Ty.y()-Tx.x()); // both left-handed systems
+    Double phaseWindup = std::atan2(Tx.y()+Ty.x(), Ty.y()-Tx.x()); // both left-handed systems
     phaseWindup -= PI/2; // to be consistent with Wu et al. (1993) and Kouba (2009) definition
     while((phaseWindupOld-phaseWindup)>PI)
       phaseWindup += 2*PI;
