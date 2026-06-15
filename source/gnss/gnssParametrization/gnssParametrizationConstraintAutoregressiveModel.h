@@ -24,7 +24,7 @@ based on autoregressive (AR) models up to order $p$ in the form
 \begin{equation}
   0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
 \end{equation}.
-The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p$.
+The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p - 1$.
 This is equivalent to applying a zero constraint with Toeplitz covariance matrix to the parameter time series.
 See \configClass{autoregressiveModelSequence}{autoregressiveModelSequenceType} for the detailed theoretical background.
 
@@ -52,6 +52,7 @@ class GnssParametrizationConstraintAutoregressiveModel : public GnssParametrizat
   ParameterSelectorPtr             parameterSelector;
   AutoregressiveModelSequencePtr   arSequence;
   Gnss                             *gnss;
+  Bool                             relativeToApriori;
 
 public:
 GnssParametrizationConstraintAutoregressiveModel(Config &config);
@@ -66,9 +67,10 @@ inline GnssParametrizationConstraintAutoregressiveModel::GnssParametrizationCons
 {
   try
   {
-    readConfig(config, "name",                             name,              Config::OPTIONAL,      "constraint.name",  "");
-    readConfig(config, "parameters",                       parameterSelector, Config::MUSTSET,  "",  "parameters to constrain");
-    readConfig(config, "autoregressiveModelSequence",      arSequence,        Config::MUSTSET,  "",  "autoregressive model sequence");
+    readConfig(config, "name",                             name,               Config::OPTIONAL,      "constraint.name",  "");
+    readConfig(config, "parameters",                       parameterSelector,  Config::MUSTSET,  "",  "parameters to constrain");
+    readConfig(config, "autoregressiveModelSequence",      arSequence,         Config::MUSTSET,  "",  "autoregressive model sequence");
+    readConfig(config, "relativeToApriori",                 relativeToApriori, Config::DEFAULT,  "0", "constrain only dx and not full x=dx+x0");
     if(isCreateSchema(config)) return;
 
     if(arSequence->dimension() != 1)
@@ -89,6 +91,10 @@ inline void GnssParametrizationConstraintAutoregressiveModel::constraints(const 
     if(!isEnabled(normalEquationInfo, name))
       return;
 
+    Vector x0 = Vector(normalEquationInfo.parameterCount());
+    if(!relativeToApriori)
+      x0 = gnss->aprioriParameter(normalEquationInfo);
+
     const std::vector<UInt> indices = parameterSelector->indexVector(normalEquationInfo.parameterNames());
 
     auto index = arSequence->distributedNormalsBlockIndex(indices.size());
@@ -107,16 +113,25 @@ inline void GnssParametrizationConstraintAutoregressiveModel::constraints(const 
         normals.setBlock(idBlock1, idBlock2);
         normals.setBlock(idBlock2, idBlock2);
 
-        Matrix N_ik = arSequence->distributedNormalsBlock(normals.blockCount(), index[k].first, index[k].second);
+        Matrix N_ik = arSequence->distributedNormalsBlock(indices.size(), index[k].first, index[k].second);
         if(normals.isMyRank(idBlock1, idBlock2))
           normals.N(idBlock1, idBlock2)(i1-blockIndex1, i2-blockIndex2) += N_ik(0, 0);
-
+        if(Parallel::isMaster(normalEquationInfo.comm))
+        {
+          n.at(idBlock1)(i1 - blockIndex1, 0) -= N_ik(0, 0) * x0.at(i2);
+          lPl += N_ik(0, 0) * x0.at(i1) * x0.at(i2);
+          if(i1 != i2)  // consider lower triangle
+          {
+            n.at(idBlock1)(i2 - blockIndex2, 0) -= N_ik(0, 0) * x0.at(i1);
+            lPl += N_ik(0, 0) * x0.at(i1) * x0.at(i2);
+          }
+        }
       }
-    });
+    }, FALSE/*timing*/);
 
-    if(Parallel::isMaster(normalEquationInfo.comm))
-        obsCount += indices.size();
     const UInt count = indices.size();
+    if(Parallel::isMaster(normalEquationInfo.comm))
+      obsCount += count;
 
     if(count)
       logStatus<<"constrain "<<name<<" ("<<count<<" parameters)"<<Log::endl;
