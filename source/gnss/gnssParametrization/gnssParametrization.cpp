@@ -34,6 +34,7 @@
 #include "gnss/gnssParametrization/gnssParametrizationTransmitterAntennas.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraints.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintAutoregressiveModel.h"
+#include "gnss/gnssParametrization/gnssParametrizationConstraintVectorAutoregressiveModel.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintDifferences.h"
 #include "gnss/gnssParametrization/gnssParametrizationGroup.h"
 #include "gnss/gnssParametrization/gnssParametrization.h"
@@ -61,6 +62,7 @@ GROOPS_REGISTER_CLASS(GnssParametrization, "gnssParametrizationType",
                       GnssParametrizationTransmitterAntennas,
                       GnssParametrizationConstraints,
                       GnssParametrizationConstraintAutoregressiveModel,
+                      GnssParametrizationConstraintVectorAutoregressiveModel,
                       GnssParametrizationConstraintDifferences,
                       GnssParametrizationGroup)
 
@@ -117,6 +119,8 @@ GnssParametrization::GnssParametrization(Config &config, const std::string &name
         base.push_back(new GnssParametrizationConstraintDifferences(config));
       if(readConfigChoiceElement(config, "constraintAutoregressiveModel",    type, "parameter constraints with an autoregressive model"))
         base.push_back(new GnssParametrizationConstraintAutoregressiveModel(config));
+      if(readConfigChoiceElement(config, "constraintVectorAutoregressiveModel",    type, "parameter constraints with a vector autoregressive model"))
+        base.push_back(new GnssParametrizationConstraintVectorAutoregressiveModel(config));
       if(readConfigChoiceElement(config, "group",                    type, "grouping parametrizations"))
         base.push_back(new GnssParametrizationGroup(config));
       endChoice(config);
