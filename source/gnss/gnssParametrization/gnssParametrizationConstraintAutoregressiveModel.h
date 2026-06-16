@@ -70,11 +70,11 @@ inline GnssParametrizationConstraintAutoregressiveModel::GnssParametrizationCons
     readConfig(config, "name",                             name,               Config::OPTIONAL,      "constraint.name",  "");
     readConfig(config, "parameters",                       parameterSelector,  Config::MUSTSET,  "",  "parameters to constrain");
     readConfig(config, "autoregressiveModelSequence",      arSequence,         Config::MUSTSET,  "",  "autoregressive model sequence");
-    readConfig(config, "relativeToApriori",                 relativeToApriori, Config::DEFAULT,  "0", "constrain only dx and not full x=dx+x0");
+    readConfig(config, "relativeToApriori",                relativeToApriori,  Config::DEFAULT,  "0", "constrain only dx and not full x=dx+x0");
     if(isCreateSchema(config)) return;
 
     if(arSequence->dimension() != 1)
-      throw("Only one dimensional AR models are supported.");
+      throw(Exception("Only one dimensional AR models are supported."));
   }
   catch(std::exception &e)
   {
