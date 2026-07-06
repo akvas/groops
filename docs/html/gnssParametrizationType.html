@@ -761,9 +761,9 @@ The standard deviation <strong class="groops-config-element">sigma</strong> is u
 Add a pseudo observation equation (constraint)
 for each selected <a class="groops-class" href="parameterSelectorType.html">parameters</a>
 based on autoregressive (AR) models up to order $p$ in the form
-\[
+\begin{equation}
   0 = x_i - \sum_{k=1}^{p} b_k x_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \sigma^2)
-\]
+\end{equation}
 The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p - 1$.
 This is equivalent to applying a zero constraint with Toeplitz covariance matrix to the parameter time series.
 See <a class="groops-class" href="autoregressiveModelSequenceType.html">autoregressiveModelSequence</a> for the detailed theoretical background.</p><p>The standard deviation $\sigma$ (<strong class="groops-config-element">sigma</strong>) is used to weight the observation equations.
@@ -780,9 +780,9 @@ See <a class="groops-class" href="autoregressiveModelSequenceType.html">autoregr
 Add a pseudo observation equation (constraint)
 for each selected <a class="groops-class" href="parameterSelectorType.html">parameters</a>
 based on vector autoregressive (AR) models up to order $p$ in the form
-\[
+\begin{equation}
   0 = \mathbf{x}_i - \sum_{k=1}^{p} \mathbf{\Phi}_k \mathbf{x}_{i-k}  + \epsilon, \hspace{15pt} \epsilon \sim \mathcal{N}(0, \mathbf{\Sigma})
-\]
+\end{equation}
 The first epochs $p - 1$ epochs are constrained using AR models of order zero to $p$.
 This is equivalent to applying a zero constraint with block-Toeplitz covariance matrix to the parameter sequence.
 See <a class="groops-class" href="autoregressiveModelSequenceType.html">autoregressiveModelSequence</a> for the detailed theoretical background.
@@ -799,9 +799,9 @@ See <a class="groops-class" href="autoregressiveModelSequenceType.html">autoregr
 <h2 id="constraintDifferences">ConstraintDifferences</h2><p>
 Add a pseudo observation equation (constraint)
 for each selected <a class="groops-class" href="parameterSelectorType.html">parameters</a> in the form
-\[
+\begin{equation}
   0 = -1 \cdot \Delta x_{k-1} + 1 \cdot \Delta x_k  + \epsilon,
-\]
+\end{equation}
 This constrains the differences of consecutive parameters, with <strong class="groops-config-element">sigma</strong> used to weight the observation equations.
 </p>
 <table class="table table-hover">
