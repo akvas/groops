@@ -93,7 +93,7 @@ inline MiscAccelerationsRadiationPressure::MiscAccelerationsRadiationPressure(Co
     FileName fileNameInAlbedo, fileNameInFlux;
 
     renameDeprecatedConfig(config, "factorSolarRadation", "factorSolarRadiation", date2time(2026, 7, 6));
-    renameDeprecatedConfig(config, "factorEarthRadation", "factorEarthRadiation",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "factorEarthRadation", "factorEarthRadiation", date2time(2026, 7, 6));
 
     readConfig(config, "solarflux",                       solarflux,        Config::DEFAULT,  "1367", "solar flux constant in 1 AU [W/m^2]");
     readConfig(config, "eclipse",                         eclipse,          Config::MUSTSET,  "",     "");

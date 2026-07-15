@@ -46,7 +46,7 @@ void IersPotential2DoodsonHarmonics::run(Config &config, Parallel::CommunicatorP
     Double    GM, R;
     UInt      minDegree, maxDegree = INFINITYDEGREE;
 
-    renameDeprecatedConfig(config, "outputfileDoodsonHarmoncis", "outputfileDoodsonHarmonics",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "outputfileDoodsonHarmoncis", "outputfileDoodsonHarmonics", date2time(2026, 7, 6));
 
     readConfig(config, "outputfileDoodsonHarmonics", fileNameOut, Config::MUSTSET, "",  "");
     readConfig(config, "inputfile",                  fileNameIn,  Config::MUSTSET, "",  "");

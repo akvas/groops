@@ -48,7 +48,7 @@ void Kernel2Coefficients::run(Config &config, Parallel::CommunicatorPtr /*comm*/
     Double    R, H;
     UInt      minDegree, maxDegree;
 
-    renameDeprecatedConfig(config, "maxDegre", "maxDegree",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "maxDegre", "maxDegree", date2time(2026, 7, 6));
 
     readConfig(config, "outputfileMatrix", fileNameOut,  Config::MUSTSET, "",  "matrix with columns degree, coefficients and inverse coefficients");
     readConfig(config, "kernel",           kernel,       Config::MUSTSET, "",  "");

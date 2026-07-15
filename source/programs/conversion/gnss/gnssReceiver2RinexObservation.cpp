@@ -52,7 +52,7 @@ void GnssReceiver2RinexObservation::run(Config &config, Parallel::CommunicatorPt
     std::vector<std::string> comments;
     std::vector<GnssType> useType, ignoreType;
 
-    renameDeprecatedConfig(config, "angency", "agency",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "angency", "agency", date2time(2026, 7, 6));
 
     readConfig(config, "outputfileRinexObservation", fileNameOut,      Config::MUSTSET,  "",    "RINEX observation file");
     readConfig(config, "inputfileGnssReceiver",      fileNameObs,      Config::MUSTSET,  "",    "GNSS instrument file");

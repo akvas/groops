@@ -52,7 +52,7 @@ void DoodsonHarmonics2IersWaterHeight::run(Config &config, Parallel::Communicato
     UInt        minDegree, maxDegree = INFINITYDEGREE;
     std::vector<std::string> headers;
 
-    renameDeprecatedConfig(config, "inputfileDoodsonHarmoncis", "inputfileDoodsonHarmonics",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "inputfileDoodsonHarmoncis", "inputfileDoodsonHarmonics", date2time(2026, 7, 6));
 
     readConfig(config, "outputfile",                       fileNameOut, Config::MUSTSET,  "","according to IERS2010, chapter 6.3.2, footnote 7");
     readConfig(config, "inputfileDoodsonHarmonics",        fileNameIn,  Config::MUSTSET,  "", "");

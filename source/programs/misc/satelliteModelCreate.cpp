@@ -141,7 +141,7 @@ template<> Bool readConfig(Config &config, const std::string &name, std::vector<
       return FALSE;
 
     renameDeprecatedConfig(config, "reflexionInfrared", "reflectionInfrared", date2time(2026, 7, 6));
-    renameDeprecatedConfig(config, "reflexionVisible", "reflectionVisible",   date2time(2026, 7, 6));
+    renameDeprecatedConfig(config, "reflexionVisible",  "reflectionVisible",  date2time(2026, 7, 6));
 
     FileName fileNameIn;
     ExpressionVariablePtr typeExpr, areaExpr;
