@@ -127,6 +127,7 @@ void GnssAntennaNormalsConstraint::run(Config &config, Parallel::CommunicatorPtr
     ParametrizationGnssAntennaPtr parametrization;
     std::string                   name, serial, radome;
     Angle                         dAzimuth, dZenith, maxZenith;
+    Bool                          ignoreGlonassFrequencyNumber;
 
     renameDeprecatedConfig(config, "outputfileNormalequation", "outputfileNormalEquation", date2time(2020, 6, 3));
     renameDeprecatedConfig(config, "inputfileNormalequation",  "inputfileNormalEquation",  date2time(2020, 6, 3));
@@ -141,6 +142,7 @@ void GnssAntennaNormalsConstraint::run(Config &config, Parallel::CommunicatorPtr
     readConfig(config, "deltaAzimuth",             dAzimuth,           Config::DEFAULT,  "1",  "[degree] sampling of pattern to estimate center/constant");
     readConfig(config, "deltaZenith",              dZenith,            Config::DEFAULT,  "1",  "[degree] sampling of pattern to estimate center/constant");
     readConfig(config, "maxZenith",                maxZenith,          Config::DEFAULT,  "90", "[degree] sampling of pattern to estimate center/constant");
+    readConfig(config, "ignoreGlonassFrequencyNumber", ignoreGlonassFrequencyNumber, Config::DEFAULT, "0", "ignore Glonass frequency number in TEC constraint");
     if(isCreateSchema(config)) return;
 
     // ============================
@@ -355,7 +357,13 @@ void GnssAntennaNormalsConstraint::run(Config &config, Parallel::CommunicatorPtr
             Matrix N(parametrization->parameterCount(), Matrix::SYMMETRIC);
             for(UInt idType=0; idType<types.at(idAnt).size(); idType++)
               if(types.at(idAnt).at(idType) == constraint.gnssType)
+              {
+                if(ignoreGlonassFrequencyNumber)
+                  types.at(idAnt).at(idType).setFrequencyNumber(0);
+
                 axpy(std::pow(types.at(idAnt).at(idType).ionosphericFactor(), 2), (constraint.applyWeight ? P.at(idType) : I), N);
+              }
+
             cholesky(N);
 
             // constraint as pseudo observation equations
@@ -363,6 +371,9 @@ void GnssAntennaNormalsConstraint::run(Config &config, Parallel::CommunicatorPtr
             for(UInt idType=0; idType<types.at(idAnt).size(); idType++)
               if(types.at(idAnt).at(idType) == constraint.gnssType)
               {
+                if(ignoreGlonassFrequencyNumber)
+                  types.at(idAnt).at(idType).setFrequencyNumber(0);
+
                 A.at(idType) = types.at(idAnt).at(idType).ionosphericFactor() * (constraint.applyWeight ? P.at(idType) : I);
                 triangularSolve(1., N.trans(), A.at(idType));
                 triangularSolve(1., N,         A.at(idType));
