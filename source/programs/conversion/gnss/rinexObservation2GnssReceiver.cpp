@@ -196,12 +196,12 @@ void RinexObservation2GnssReceiver::run(Config &config, Parallel::CommunicatorPt
       }
       catch(std::exception &e)
       {
-        logWarning<<e.what()<<"; continue..."<<Log::endl;
+        logWarning<<e.what()<<"in <"<<fileName<<">; continue..."<<Log::endl;
       }
     }
 
     if(receiverArc.size() == 0)
-      throw(Exception("empty arc"));
+      throw(Exception("no data found"));
 
     receiverArc.sort();
     receiverArc.removeDuplicateEpochs(/*keepFirst*/FALSE);
@@ -368,6 +368,10 @@ void RinexObservation2GnssReceiver::readHeader(InFile &file, UInt lineCount)
 
           if(rinexVersion <= 3.02 && system == 'C' && type[1] == '1')
             type[1] = '2'; // version 3.02: BeiDou C1C/L1I/... ==> C2C/L2I/...
+
+          // blank "attribute" for 'X' (channel number) pseudo-observations
+          if(type[0] == 'X' && type.size() == 2)
+            type += '?'; // e.g. X1 ==> X1?
 
           system2ObsTypes[system].push_back(GnssType(type+system+"**"));
         }
@@ -548,14 +552,16 @@ void RinexObservation2GnssReceiver::readObservationData(InFile &file)
           satNumber.at(idSat) = GnssType("***"+line.substr(0,3));
 
         const UInt obsCount = getSystemObsTypes(satNumber.at(idSat), time).size();
-        obs.at(idSat) = Vector(obsCount);
+        obs.at(idSat) = Vector(obsCount, NAN_EXPR);
         if(rinexVersion >= 3)
           line.resize(3+16*obsCount, ' ');
         for(UInt idType = 0; idType < obsCount; idType++)
         {
           if(idType > 0 && idType%maxObsCountPerLine == 0) // with possible continuation lines
             getLine(file, line, label);
-          obs.at(idSat)(idType) = String::toDouble(line.substr((rinexVersion >= 3 ? 3 : 0)+16*(idType%maxObsCountPerLine), 14));
+          const std::string str = line.substr((rinexVersion >= 3 ? 3 : 0)+16*(idType%maxObsCountPerLine), 14);
+          if(!std::all_of(str.begin(), str.end(), ::isspace)) // not empty string?
+            obs.at(idSat)(idType) = String::toDouble(str);
 
           // TODO: LLI and signal strength
         }
@@ -892,7 +898,7 @@ Bool RinexObservation2GnssReceiver::testLabel(const std::string &labelInLine, co
     return TRUE;
   if(optional)
     return FALSE;
-  throw(Exception(std::string("In line '")+labelInLine+"' label '"+label+"' expected\n"));
+  throw(Exception(std::string("In line '")+labelInLine+"' label '"+label+"' expected"));
 }
 
 /***********************************************/

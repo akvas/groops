@@ -61,7 +61,7 @@ inline BorderSatelliteVisibility::BorderSatelliteVisibility(Config &config)
   readConfig(config, "earthRadius",     earthRadius,     Config::DEFAULT, STRING_DEFAULT_R, "radius of the spherical Earth in meters");
   readConfig(config, "inclination",     inclination,     Config::MUSTSET,  "", "inclination of the satellite orbit in degrees");
   readConfig(config, "orbitHeight",     orbitHeight,     Config::MUSTSET,  "", "height of the satellite orbit above the Earth's surface in meters");
-  readConfig(config, "minElevation",    minElevation,    Config::DEFAULT,  "", "minimum elevation angle for satellite visibility in degrees");
+  readConfig(config, "minElevation",    minElevation,    Config::DEFAULT,  "0", "minimum elevation angle for satellite visibility in degrees");
   readConfig(config, "exclude",         exclude,         Config::DEFAULT,  "0", "dismiss points inside");
   if(isCreateSchema(config)) return;
 
