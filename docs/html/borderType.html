@@ -135,6 +135,22 @@ Use a negative value to shrink the polygon area.
 <tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">exclude</div></div></td><td>boolean</td><td>dismiss points inside</td></tr>
 </table>
 
+<h2>SatelliteVisibility</h2><p></p><p>Selects antenna sky directions that are geometrically accessible to a
+circular satellite orbit. This border represents the long-term geometrical visibility envelope.
+In this context longitude is interpreted as azimuth, measured clockwise from north, and latitude as elevation.</p><p>The receiver is represented on a spherical Earth with radius
+<strong class="groops-config-element">earthRadius</strong>. The satellite orbit is defined by its height above the Earth's surface
+<strong class="groops-config-element">orbitHeight</strong> (added to the Earth's surface) and its <strong class="groops-config-element">inclination</strong>.
+</p>
+<table class="table table-hover">
+<tr class="table-primary"><th>Name</th><th>Type</th><th>Annotation</th></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">stationLatitude</div></div></td><td>angle</td><td>geographic latitude of the station in degrees</td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">earthRadius</div></div></td><td>double</td><td>radius of the spherical Earth in meters</td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">inclination</div></div></td><td>angle</td><td>inclination of the satellite orbit in degrees</td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config mustset">orbitHeight</div></div></td><td>double</td><td>height of the satellite orbit above the Earth's surface in meters</td></tr>
+<tr class="table-light"><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">minElevation</div></div></td><td>angle</td><td>minimum elevation angle for satellite visibility in degrees</td></tr>
+<tr class=""><td class="m-0"><div class="h-100 config-tree depth-0"><div class="h-100 config optional">exclude</div></div></td><td>boolean</td><td>dismiss points inside</td></tr>
+</table>
+
         </div>
     </main>
 </body>

@@ -161,6 +161,32 @@ Name & Type & Annotation\\
 \hline
 \end{tabularx}
 
+
+\subsection{SatelliteVisibility}
+
+Selects antenna sky directions that are geometrically accessible to a
+circular satellite orbit. This border represents the long-term geometrical visibility envelope.
+In this context longitude is interpreted as azimuth, measured clockwise from north, and latitude as elevation.
+
+The receiver is represented on a spherical Earth with radius
+\config{earthRadius}. The satellite orbit is defined by its height above the Earth's surface
+\config{orbitHeight} (added to the Earth's surface) and its \config{inclination}.
+
+
+\keepXColumns
+\begin{tabularx}{\textwidth}{N T A}
+\hline
+Name & Type & Annotation\\
+\hline
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~stationLatitude & \hfuzz=500pt angle & \hfuzz=500pt geographic latitude of the station in degrees\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~earthRadius & \hfuzz=500pt double & \hfuzz=500pt radius of the spherical Earth in meters\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~inclination & \hfuzz=500pt angle & \hfuzz=500pt inclination of the satellite orbit in degrees\\
+\hfuzz=500pt\includegraphics[width=1em]{element-mustset.pdf}~orbitHeight & \hfuzz=500pt double & \hfuzz=500pt height of the satellite orbit above the Earth's surface in meters\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~minElevation & \hfuzz=500pt angle & \hfuzz=500pt minimum elevation angle for satellite visibility in degrees\\
+\hfuzz=500pt\includegraphics[width=1em]{element.pdf}~exclude & \hfuzz=500pt boolean & \hfuzz=500pt dismiss points inside\\
+\hline
+\end{tabularx}
+
 \clearpage
 %==================================
 
