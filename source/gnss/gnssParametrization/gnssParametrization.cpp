@@ -35,7 +35,7 @@
 #include "gnss/gnssParametrization/gnssParametrizationConstraints.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintAutoregressiveModel.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintVectorAutoregressiveModel.h"
-#include "gnss/gnssParametrization/gnssParametrizationConstraintDifferences.h"
+#include "gnss/gnssParametrization/gnssParametrizationConstraintRandomWalk.h"
 #include "gnss/gnssParametrization/gnssParametrizationGroup.h"
 #include "gnss/gnssParametrization/gnssParametrization.h"
 
@@ -63,7 +63,7 @@ GROOPS_REGISTER_CLASS(GnssParametrization, "gnssParametrizationType",
                       GnssParametrizationConstraints,
                       GnssParametrizationConstraintAutoregressiveModel,
                       GnssParametrizationConstraintVectorAutoregressiveModel,
-                      GnssParametrizationConstraintDifferences,
+                      GnssParametrizationConstraintRandomWalk,
                       GnssParametrizationGroup)
 
 GROOPS_READCONFIG_UNBOUNDED_CLASS(GnssParametrization, "gnssParametrizationType")
@@ -115,8 +115,8 @@ GnssParametrization::GnssParametrization(Config &config, const std::string &name
         base.push_back(new GnssParametrizationTransmitterAntennas(config));
       if(readConfigChoiceElement(config, "constraints",              type, "parameter constraints"))
         base.push_back(new GnssParametrizationConstraints(config));
-      if(readConfigChoiceElement(config, "constraintDifferences",    type, "parameter difference constraints"))
-        base.push_back(new GnssParametrizationConstraintDifferences(config));
+      if(readConfigChoiceElement(config, "constraintRandomWalk",     type, "random walk constraints"))
+        base.push_back(new GnssParametrizationConstraintRandomWalk(config));
       if(readConfigChoiceElement(config, "constraintAutoregressiveModel",    type, "parameter constraints with an autoregressive model"))
         base.push_back(new GnssParametrizationConstraintAutoregressiveModel(config));
       if(readConfigChoiceElement(config, "constraintVectorAutoregressiveModel",    type, "parameter constraints with a vector autoregressive model"))

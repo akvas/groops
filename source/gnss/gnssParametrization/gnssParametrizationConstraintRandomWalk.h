@@ -1,6 +1,6 @@
 /***********************************************/
 /**
-* @file gnssParametrizationConstraintDifferences.h
+* @file gnssParametrizationConstraintRandomWalk.h
 *
 * @brief Constraint on parameter differences.
 * @see GnssParametrization
@@ -11,13 +11,13 @@
 */
 /***********************************************/
 
-#ifndef __GROOPS_GNSSPARAMETRIZATIONCONSTRAINTDIFFERENCES__
-#define __GROOPS_GNSSPARAMETRIZATIONCONSTRAINTDIFFERENCES__
+#ifndef __GROOPS_GNSSPARAMETRIZATIONCONSTRAINTRANDOMWALK__
+#define __GROOPS_GNSSPARAMETRIZATIONCONSTRAINTRANDOMWALK__
 
 // Latex documentation
 #ifdef DOCSTRING_GnssParametrization
-static const char *docstringGnssParametrizationConstraintDifferences = R"(
-\subsection{ConstraintDifferences}\label{gnssParametrizationType:constraintDifferences}
+static const char *docstringGnssParametrizationConstraintRandomWalk = R"(
+\subsection{ConstraintRandomWalk}\label{gnssParametrizationType:constraintRandomWalk}
 Add a pseudo observation equation (constraint)
 for each selected \configClass{parameters}{parameterSelectorType} in the form
 \begin{equation}
@@ -40,7 +40,7 @@ This constrains the differences of consecutive parameters, with \config{sigma} u
 /** @brief Parameter constraints.
 * @ingroup gnssParametrizationGroup
 * @see GnssParametrization */
-class GnssParametrizationConstraintDifferences : public GnssParametrizationBase
+class GnssParametrizationConstraintRandomWalk : public GnssParametrizationBase
 {
   std::string          name;
   ParameterSelectorPtr parameterSelector;
@@ -49,7 +49,7 @@ class GnssParametrizationConstraintDifferences : public GnssParametrizationBase
   Gnss                *gnss;
 
 public:
-GnssParametrizationConstraintDifferences(Config &config);
+GnssParametrizationConstraintRandomWalk(Config &config);
 
   void init(Gnss *gnss, Parallel::CommunicatorPtr /*comm*/) override {this->gnss = gnss;}
   void constraints(const GnssNormalEquationInfo &normalEquationInfo, MatrixDistributed &normals, std::vector<Matrix> &n, Double &lPl, UInt &obsCount) const override;
@@ -57,7 +57,7 @@ GnssParametrizationConstraintDifferences(Config &config);
 
 /***********************************************/
 
-inline GnssParametrizationConstraintDifferences::GnssParametrizationConstraintDifferences(Config &config)
+inline GnssParametrizationConstraintRandomWalk::GnssParametrizationConstraintRandomWalk(Config &config)
 {
   try
   {
@@ -75,7 +75,7 @@ inline GnssParametrizationConstraintDifferences::GnssParametrizationConstraintDi
 
 /***********************************************/
 
-inline void GnssParametrizationConstraintDifferences::constraints(const GnssNormalEquationInfo &normalEquationInfo, MatrixDistributed &normals, std::vector<Matrix> &n, Double &lPl, UInt &obsCount) const
+inline void GnssParametrizationConstraintRandomWalk::constraints(const GnssNormalEquationInfo &normalEquationInfo, MatrixDistributed &normals, std::vector<Matrix> &n, Double &lPl, UInt &obsCount) const
 {
   try
   {
