@@ -119,6 +119,45 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="satelliteVisibility">
+				<xs:annotation>
+					<xs:documentation>satellite visibility</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="stationLatitude" type="angle">
+							<xs:annotation>
+								<xs:documentation>geographic latitude of the station in degrees</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="earthRadius" type="double" minOccurs="0" default="6378136.3">
+							<xs:annotation>
+								<xs:documentation>radius of the spherical Earth in meters</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="inclination" type="angle">
+							<xs:annotation>
+								<xs:documentation>inclination of the satellite orbit in degrees</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="orbitHeight" type="double">
+							<xs:annotation>
+								<xs:documentation>height of the satellite orbit above the Earth&apos;s surface in meters</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="minElevation" type="angle" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>minimum elevation angle for satellite visibility in degrees</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="exclude" type="boolean" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>dismiss points inside</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="conditionType">
@@ -2337,31 +2376,6 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="constraintDifferences">
-				<xs:annotation>
-					<xs:documentation>parameter difference constraints</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="name" type="string" minOccurs="0" default="constraint.name"/>
-						<xs:element name="parameters" type="parameterSelectorType" maxOccurs="unbounded">
-							<xs:annotation>
-								<xs:documentation>parameters to constrain</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="sigma" type="double">
-							<xs:annotation>
-								<xs:documentation>sigma of the constraint (same unit as parameter)</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="relativeToApriori" type="boolean" minOccurs="0" default="0">
-							<xs:annotation>
-								<xs:documentation>constrain only dx and not full x=dx+x0</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<xs:element name="constraintAutoregressiveModel">
 				<xs:annotation>
 					<xs:documentation>parameter constraints with an autoregressive model</xs:documentation>
@@ -2397,6 +2411,65 @@
 						<xs:element name="autoregressiveModelSequence" type="autoregressiveModelSequenceType">
 							<xs:annotation>
 								<xs:documentation>autoregressive model sequence</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="parameterPerDimension" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>parameter selector for each dimension</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="parameters" type="parameterSelectorType" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>parameters to constrain</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="relativeToApriori" type="boolean" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>constrain only dx and not full x=dx+x0</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="constraintRandomWalk">
+				<xs:annotation>
+					<xs:documentation>random walk constraints</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="string" minOccurs="0" default="constraint.name"/>
+						<xs:element name="parameters" type="parameterSelectorType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>parameters to constrain</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sigma" type="double">
+							<xs:annotation>
+								<xs:documentation>sigma of the constraint (same unit as parameter)</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="relativeToApriori" type="boolean" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>constrain only dx and not full x=dx+x0</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="constraintMultivariateRandomWalk">
+				<xs:annotation>
+					<xs:documentation>multivariate random walk constraints</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="string" minOccurs="0" default="constraint.name"/>
+						<xs:element name="covariance" type="matrixGeneratorType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>covariance matrix of the random walk increments</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="parameterPerDimension" maxOccurs="unbounded">
@@ -11803,6 +11876,11 @@
 						<xs:element name="maxZenith" type="angle" minOccurs="0" default="90">
 							<xs:annotation>
 								<xs:documentation>[degree] sampling of pattern to estimate center/constant</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ignoreGlonassFrequencyNumber" type="boolean" minOccurs="0" default="0">
+							<xs:annotation>
+								<xs:documentation>ignore Glonass frequency number in TEC constraint</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>

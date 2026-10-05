@@ -35,6 +35,7 @@
 #include "gnss/gnssParametrization/gnssParametrizationConstraints.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintAutoregressiveModel.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintVectorAutoregressiveModel.h"
+#include "gnss/gnssParametrization/gnssParametrizationConstraintMultivariateRandomWalk.h"
 #include "gnss/gnssParametrization/gnssParametrizationConstraintRandomWalk.h"
 #include "gnss/gnssParametrization/gnssParametrizationGroup.h"
 #include "gnss/gnssParametrization/gnssParametrization.h"
@@ -63,6 +64,7 @@ GROOPS_REGISTER_CLASS(GnssParametrization, "gnssParametrizationType",
                       GnssParametrizationConstraints,
                       GnssParametrizationConstraintAutoregressiveModel,
                       GnssParametrizationConstraintVectorAutoregressiveModel,
+                      GnssParametrizationConstraintMultivariateRandomWalk,
                       GnssParametrizationConstraintRandomWalk,
                       GnssParametrizationGroup)
 
@@ -115,12 +117,14 @@ GnssParametrization::GnssParametrization(Config &config, const std::string &name
         base.push_back(new GnssParametrizationTransmitterAntennas(config));
       if(readConfigChoiceElement(config, "constraints",              type, "parameter constraints"))
         base.push_back(new GnssParametrizationConstraints(config));
-      if(readConfigChoiceElement(config, "constraintRandomWalk",     type, "random walk constraints"))
-        base.push_back(new GnssParametrizationConstraintRandomWalk(config));
       if(readConfigChoiceElement(config, "constraintAutoregressiveModel",    type, "parameter constraints with an autoregressive model"))
         base.push_back(new GnssParametrizationConstraintAutoregressiveModel(config));
       if(readConfigChoiceElement(config, "constraintVectorAutoregressiveModel",    type, "parameter constraints with a vector autoregressive model"))
         base.push_back(new GnssParametrizationConstraintVectorAutoregressiveModel(config));
+      if(readConfigChoiceElement(config, "constraintRandomWalk",     type, "random walk constraints"))
+        base.push_back(new GnssParametrizationConstraintRandomWalk(config));
+      if(readConfigChoiceElement(config, "constraintMultivariateRandomWalk", type, "multivariate random walk constraints"))
+        base.push_back(new GnssParametrizationConstraintMultivariateRandomWalk(config));
       if(readConfigChoiceElement(config, "group",                    type, "grouping parametrizations"))
         base.push_back(new GnssParametrizationGroup(config));
       endChoice(config);
